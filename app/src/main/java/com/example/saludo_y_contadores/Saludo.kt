@@ -28,57 +28,62 @@ import androidx.compose.ui.unit.sp
 //inicializamos variable contador de botones
 var contAcep = 0
 var contCanc = 0
+
 @Composable
 fun Dialog(saludo: (String) -> Unit) {
     var nombreSaludo by rememberSaveable { mutableStateOf("") }
 
-        androidx.compose.ui.window.Dialog(onDismissRequest = {  }) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .padding(16.dp),
-                content = {
-                    Column {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 16.dp),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            Text(text = "Configuración", fontSize = 20.sp)
+    androidx.compose.ui.window.Dialog(onDismissRequest = { }) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .padding(0.dp, 15.dp, 0.dp, 20.dp),
+            content = {
+                Column(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        Text(text = "Configuración", fontSize = 20.sp)
+                    }
+                    Row {
+                        TextField(
+                            value = nombreSaludo,
+                            onValueChange = {
+                                nombreSaludo = it
+                            },
+                            label = { Text("Introduce tu nombre") }
+                        )
+                    }
+                    Row {
+                        Button(onClick = {
+                            saludo("Hola, $nombreSaludo")
+                            contAcep += 1
+                        }) {
+                            Text(text = "A$contAcep")
                         }
-                        Row {
-                            TextField(
-                                value = nombreSaludo,
-                                onValueChange = {
-                                    nombreSaludo = it
-                                },
-                                label = { Text("Introduce tu nombre") }
-                            )
+                        Button(onClick = { nombreSaludo = "" }) {
+                            Text(text = "L")
                         }
-                        Row {
-                            Button(onClick = {
-                                saludo("Hola, $nombreSaludo")
-                                contAcep += 1
-                            }) {
-                                Text(text = "A$contAcep")
-                            }
-                            Button(onClick = { nombreSaludo = ""}) {
-                                Text(text = "L")
-                            }
-                            Button(onClick = {
-                                saludo("")
-                                contCanc += 1
-                                }) {
-                                Text(text = "C$contCanc")
-                            }
+                        Button(onClick = {
+                            saludo("")
+                            contCanc += 1
+                        }) {
+                            Text(text = "C$contCanc")
                         }
                     }
                 }
-            )
+            }
+        )
 
-        }
+    }
 
 }
 
@@ -92,8 +97,7 @@ fun Saludo() {
     var openDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        Modifier
-            .fillMaxSize(),
+        Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
