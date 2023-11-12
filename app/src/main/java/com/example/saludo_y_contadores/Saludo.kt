@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 //import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,10 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-//@Preview
+//inicializamos variable contador de botones
+var contAcep = 0
+var contCanc = 0
 @Composable
 fun Dialog(saludo: (String) -> Unit) {
-    //lanzaDialog: Boolean
     var nombreSaludo by rememberSaveable { mutableStateOf("") }
 
         androidx.compose.ui.window.Dialog(onDismissRequest = {  }) {
@@ -56,14 +58,20 @@ fun Dialog(saludo: (String) -> Unit) {
                             )
                         }
                         Row {
-                            Button(onClick = { saludo(nombreSaludo) }) {
-                                Text(text = "Acep")
+                            Button(onClick = {
+                                saludo("Hola, $nombreSaludo")
+                                contAcep += 1
+                            }) {
+                                Text(text = "A$contAcep")
                             }
-                            Button(onClick = { /*TODO*/ }) {
-                                Text(text = "Limp")
+                            Button(onClick = { nombreSaludo = ""}) {
+                                Text(text = "L")
                             }
-                            Button(onClick = { /*TODO*/ }) {
-                                Text(text = "Canc")
+                            Button(onClick = {
+                                saludo("")
+                                contCanc += 1
+                                }) {
+                                Text(text = "C$contCanc")
                             }
                         }
                     }
