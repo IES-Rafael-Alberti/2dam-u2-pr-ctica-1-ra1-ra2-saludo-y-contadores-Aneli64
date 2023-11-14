@@ -29,11 +29,17 @@ import androidx.compose.ui.unit.sp
 var contAcep = 0
 var contCanc = 0
 
+/**
+ * Funcion que nos representa nuestro dialogo
+ * @param saludo Funcion lambda en el que pillamos el string escrito en nuestro dialog,
+ * y modifica la variable de nuestra funcion de lanzamiento principal
+ */
 @Composable
 fun Dialog(saludo: (String) -> Unit) {
     var nombreSaludo by rememberSaveable { mutableStateOf("") }
 
     androidx.compose.ui.window.Dialog(onDismissRequest = { }) {
+        //Card que define el diseño de nuestro dialog
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,15 +69,18 @@ fun Dialog(saludo: (String) -> Unit) {
                         )
                     }
                     Row {
+                        //Boton en donde al hacer click, utilizamos la variable escrita en nuestro dialog
                         Button(onClick = {
                             saludo("Hola, $nombreSaludo")
                             contAcep += 1
                         }) {
                             Text(text = "A$contAcep")
                         }
+                        //Boton que nos limpia el contenido escrito
                         Button(onClick = { nombreSaludo = "" }) {
                             Text(text = "L")
                         }
+                        //Boton que cancela la operacion y vuelve al inicio
                         Button(onClick = {
                             saludo("")
                             contCanc += 1
@@ -87,7 +96,9 @@ fun Dialog(saludo: (String) -> Unit) {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Funcion principal que realiza el saludo
+ */
 @Preview
 @Composable
 fun Saludo() {
@@ -115,6 +126,7 @@ fun Saludo() {
                 label = { Text("") }
             )
         }
+        //Condicional en el usamos nuestra funcion lambda, siempre que se abra el dialog
         if (openDialog) {
             Dialog { newValue ->
                 textFieldText = newValue
