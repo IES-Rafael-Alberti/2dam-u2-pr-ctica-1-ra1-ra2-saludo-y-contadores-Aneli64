@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 
 //inicializamos variable contador de botones
 var contAcep = 0
@@ -38,7 +39,7 @@ var contCanc = 0
 fun Dialog(saludo: (String) -> Unit) {
     var nombreSaludo by rememberSaveable { mutableStateOf("") }
 
-    androidx.compose.ui.window.Dialog(onDismissRequest = { }) {
+    Dialog(onDismissRequest = { }) {
         //Card que define el diseño de nuestro dialog
         Card(
             modifier = Modifier
