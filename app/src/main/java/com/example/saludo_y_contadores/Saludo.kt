@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,7 +56,7 @@ fun Dialog(saludo: (String) -> Unit) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp),
+                            .padding(7.dp),
                         horizontalArrangement = Arrangement.End
                     ) {
                         Text(text = "Configuración", fontSize = 20.sp)
@@ -72,21 +73,22 @@ fun Dialog(saludo: (String) -> Unit) {
                     Row {
                         //Boton en donde al hacer click, utilizamos la variable escrita en nuestro dialog
                         Button(onClick = {
-                            saludo("Hola, $nombreSaludo")
+                            if (nombreSaludo == "") saludo("")
+                            else saludo("Hola, $nombreSaludo")
                             contAcep += 1
-                        }) {
-                            Text(text = "A$contAcep")
+                        },Modifier.padding(17.dp)) {
+                            Text(text = "A$contAcep", fontSize = 14.sp)
                         }
                         //Boton que nos limpia el contenido escrito
-                        Button(onClick = { nombreSaludo = "" }) {
-                            Text(text = "L")
+                        Button(onClick = { nombreSaludo = "" },Modifier.padding(17.dp)) {
+                            Text(text = "L", fontSize = 14.sp)
                         }
                         //Boton que cancela la operacion y vuelve al inicio
                         Button(onClick = {
                             saludo("")
                             contCanc += 1
-                        }) {
-                            Text(text = "C$contCanc")
+                        },Modifier.padding(17.dp)) {
+                            Text(text = "C$contCanc", fontSize = 14.sp)
                         }
                     }
                 }
